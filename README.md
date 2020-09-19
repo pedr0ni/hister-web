@@ -1,4 +1,4 @@
-# sala-de-leitura-web
+# hister-web
 
 ## Project setup
 ```
