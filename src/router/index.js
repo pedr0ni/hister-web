@@ -16,7 +16,6 @@ import Authentication from '../views/Authentication/Authentication'
 import Login from '../views/Authentication/Login'
 import Register from '../views/Authentication/Register'
 import UserService from '../services/UserService'
-import { is } from 'core-js/fn/object'
 
 Vue.use(VueRouter)
 
