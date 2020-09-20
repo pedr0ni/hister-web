@@ -15,6 +15,8 @@ import ItemInfo from '../views/Dashboard/Library/ItemInfo'
 import Authentication from '../views/Authentication/Authentication'
 import Login from '../views/Authentication/Login'
 import Register from '../views/Authentication/Register'
+import UserService from '../services/UserService'
+import { is } from 'core-js/fn/object'
 
 Vue.use(VueRouter)
 
@@ -77,6 +79,21 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach(async (to, from, next) => {
+  if (to.path.indexOf('authentication') != -1) {
+    next()
+    return
+  }
+  const isLogged = await UserService.isLogged()
+  if (isLogged) {
+    next()
+    return
+  }
+  next({
+    name: 'Login'
+  })
 })
 
 export default router

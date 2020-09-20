@@ -62,7 +62,10 @@ input, label {
 }
 
 .login-background {
-    background-color: var(--purple);
+	background-image: url('~@/assets/img/backgrounds/auth-bg-1.png');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
     width: 100%;
     height: 100%;
     display: flex;
@@ -73,7 +76,8 @@ input, label {
 .login-card {
     background-color: #fff;
     width: 420px;
-    min-height: 475px;
+	min-height: 475px;
+	border-radius: 12px;
 }
 
 .login-title {
@@ -359,6 +363,10 @@ input, label {
 	flex-wrap: nowrap;
 	align-items: center;
 	justify-content: space-around;
+}
+
+.logo-holder img {
+	width: 100%;
 }
 
 .vertical-separator {

@@ -1,15 +1,15 @@
 <template>
     <div>
-        <h1 class="login-title">SALA DE LEITURA</h1>
+        <h1 class="login-title">HISTER</h1>
         <img src="~@/assets/img/login-placeholder.png" alt="">
         <div class="login-card-form">
             <div class="input-holder login-input">
                 <label>Email</label>
-                <input type="text" placeholder="exemplo@exemplo.com">
+                <input v-model="authentication.email" type="text" placeholder="exemplo@exemplo.com">
             </div>
             <div class="input-holder login-input mt-20">
                 <label>SENHA</label>
-                <input type="password" placeholder="********">
+                <input v-model="authentication.password" type="password" placeholder="********">
             </div>
 
             <div class="md-checkbox mt-15">
@@ -31,20 +31,29 @@
 
 <script>
 import Snackbar from '../../components/Snackbar'
+import UserService from '../../services/UserService'
+
 export default {
     data() {
         return {
-            isLoading: false
+            isLoading: false,
+            authentication: {
+                email: null,
+                password: null
+            }
         }
     },
     methods: {
         login() {
-            
             this.isLoading = true
-            setTimeout(() => {
-                Snackbar.show('Nome de usuário ou senha incorreto(s)...')
+            UserService.authenticate(this.authentication).then(response => {
+                UserService.setToken(response.data.token)
+                this.$router.push({name: 'Overview'})
+            }).catch(error => {
+                Snackbar.show(error.response.data.message)
+            }).then(() => {
                 this.isLoading = false
-            }, this.$fakeDelay)
+            })
         }
     }
 }

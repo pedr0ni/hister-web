@@ -1,9 +1,10 @@
 <template>
     <div>
+
         <div class="action-holder">
             <div class="input-holder icon-input">
                 <Icon name="search" />
-                <input type="text" placeholder="Buscar por livros ou filmes...">
+                <input type="text" placeholder="Buscar por titulos de livros...">
             </div>
             <router-link to="/dashboard/library/create">
                 <button class="button primary-button ripple">
@@ -20,13 +21,11 @@
         image="login-placeholder.png" 
         title="Nenhum livro encontrado..." 
         content="Sua biblioteca de livros aparece aqui, clique no botão CADASTRAR para adicionar um livro" 
-        v-else-if="items.length == 0" />
+        v-else-if="books.length == 0" />
         <div v-else>
             <table class="table-responsive">
                 <thead>
                     <tr>
-                        <td>#ID</td>
-                        <td>Tipo</td>
                         <td>Nome</td>
                         <td>Autor</td>
                         <td>Categoria</td>
@@ -37,23 +36,19 @@
                 </thead>
 
                 <tbody>
-                    <tr v-for="item in items" :key="item.itemId">
-                        <td>{{ item.itemId }}</td>
-                        <td>
-                            <Icon :name="item.type.icon" />
-                        </td>
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.author }}</td>
-                        <td>{{ item.category }}</td>
+                    <tr v-for="book in books" :key="book._id">
+                        <td style="width: 20%">{{ book.title }}</td>
+                        <td>{{ book.authors }}</td>
+                        <td>{{ book.category.name }}</td>
                         <td>
                             <span class="status status-success">DISPONÍVEL</span>
                         </td>
-                        <td>{{ item.createdAt }}</td>
+                        <td>{{ book.createdAt }}</td>
                         <td>
                             <Icon type="action-icon" name="more_vert">
-                                <router-link :to="`/dashboard/library/${item.itemId}`"><Icon name="create" /> Editar</router-link>
-                                <a @click="copyItemLink(item)"><Icon name="link" /> Compartilhar link</a>
-                                <a @click="deleteItem(item)" class="danger-link"><Icon name="delete" /> Deletar</a>
+                                <router-link :to="`/dashboard/library/${book._id}`"><Icon name="create" /> Editar</router-link>
+                                <a @click="copyItemLink(book)"><Icon name="link" /> Compartilhar link</a>
+                                <a @click="deleteItem(book)" class="danger-link"><Icon name="delete" /> Deletar</a>
                             </Icon>
                         </td>
                     </tr>
@@ -61,11 +56,11 @@
 
             </table>
             <div class="table-pagination">
-                <div class="back ripple">
+                <div class="back ripple" @click="prevPage()">
                     <i class="material-icons">chevron_left</i>
                 </div>
-                <p class="body-one">Página 1</p>
-                <div class="forward ripple">
+                <p class="body-one">Página {{ (pagination.page + 1) }} de {{ (pagination.pages + 1) }}</p>
+                <div class="forward ripple" @click="nextPage()">
                     <i class="material-icons">chevron_right</i>
                 </div>
             </div>
@@ -74,35 +69,64 @@
 </template>
 
 <script>
+import BookService from '../../../services/BookService'
 import Snackbar from '@/components/Snackbar'
-
-import itemsMock from '@/mocks/item.json'
+import ProgressIndicator from '../../../components/ProgressIndicator'
 
 export default {
     data() {
         return {
-            items: [],
+            books: [],
+            pagination: null,
             isLoading: false
         }
     },
     methods: {
         loadData() {
-            this.isLoading = true
-            this.items = itemsMock
-            setTimeout(() => {
-                this.isLoading = false
-            }, this.$fakeDelay)
+            this.loadBooks()
         },
 
-        deleteItem(item) {
-            Snackbar.show(`Você realmente deseja deletar o item ${item.name}?`, 'DELETAR', 6000, () => {
-                this.items = this.items.filter(i => i.itemId != item.itemId)
-                Snackbar.show(`O item ${item.name} foi removido da sua biblioteca.`)
+        deleteItem(book) {
+            Snackbar.show(`Você realmente deseja deletar o item ${book.title}?`, 'DELETAR', 6000, () => {
+                ProgressIndicator.show()
+                BookService.delete(book._id).then(response => {
+                    this.books = this.books.filter(b => b._id != book._id)
+                    Snackbar.show(response.data.message)       
+                }).catch(err => {
+                    console.error(err)
+                }).then(() => {
+                    ProgressIndicator.hide()
+                })
+
             })
         },
 
         copyItemLink(item) {
             console.log(item)
+        },
+
+        loadBooks(page = 0) {
+            ProgressIndicator.show()
+            BookService.listAll(page).then(response => {
+                this.books = response.data.books
+                this.pagination = response.data.pagination
+            }).catch(error => {
+                console.error(error)
+            }).then(() => {
+                ProgressIndicator.hide()
+            })
+        },
+
+        nextPage() {
+            if (this.pagination.page + 1 > this.pagination.pages)
+                return
+            this.loadBooks(this.pagination.page + 1)
+        },
+
+        prevPage() {
+            if (this.pagination.page - 1 <= 0)
+                return
+            this.loadBooks(this.pagination.page - 1)
         }
     },
     beforeMount() {

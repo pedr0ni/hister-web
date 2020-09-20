@@ -4,7 +4,7 @@
         <img src="~@/assets/img/complete-placeholder.png" alt="">
         <div class="login-card-form">
             <p class="body-one text-center">{{ content ? content : 'Content' }}</p>
-            <button class="button primary-button ripple mt-20" @click="buttonAction ? buttonAction : () => {console.log('Nothing')}">{{ buttonText ? buttonText : 'Button text' }}</button>
+            <button style="height: 65px;" class="button primary-button ripple mt-20" @click="buttonAction ? buttonAction() : () => {}">{{ buttonText ? buttonText : 'Button text' }}</button>
         </div>
     </div>
 </template>

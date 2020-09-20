@@ -3,7 +3,7 @@
     <div>
         <header class="dashboard-header shadow-two">
             <div class="logo-holder">
-                <h6 class="logo">SALA DE LEITURA</h6>
+                <img src="~@/assets/logo.png" alt="">
                 <div class="vertical-separator"></div>
             </div>
             <div class="menu-items">
@@ -15,6 +15,7 @@
                 <a>
                     <Icon name="more_vert" type="action-icon">
                         <router-link to="/dashboard/profile/my"><Icon name="account_circle" /> Meu perfil</router-link>
+                        <a @click="logout()"><Icon name="exit_to_app" /> Sair</a>
                     </Icon>
                 </a>
             </div>
@@ -34,10 +35,19 @@
 </template>
 
 <script>
+import UserService from '../../services/UserService'
 export default {
     data () {
         return {
             transitionName: 'slide-left'
+        }
+    },
+    methods: {
+        logout() {
+            UserService.logout()
+            this.$router.push({
+                name: 'Login'
+            })
         }
     },
     watch: {
