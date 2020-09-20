@@ -81,18 +81,23 @@ const router = new VueRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  if (to.path.indexOf('authentication') != -1) {
-    next()
-    return
-  }
   const isLogged = await UserService.isLogged()
-  if (isLogged) {
-    next()
+
+  if (isLogged && to.path.indexOf('authentication') != -1) {
+    next({
+      name: 'Overview'
+    })
     return
   }
-  next({
-    name: 'Login'
-  })
+
+  if (!isLogged && to.path.indexOf('authentication') == -1) {
+    next({
+      name: 'Login'
+    })
+    return
+  }
+
+  next()
 })
 
 export default router
