@@ -249,7 +249,7 @@ input, label {
 
 .snackbar {
 	background-color: #323232;
-	position: absolute;
+	position: fixed;
 	top: 15px;
 	display: flex;
 	flex-direction: row;
@@ -382,7 +382,7 @@ input, label {
 	flex-wrap: nowrap;
 	align-items: center;
 	justify-content: flex-start;
-	width: 60%;
+	width: 55%;
 	height: 100%;
 }
 
@@ -590,7 +590,6 @@ input, label {
 	background: #fff;
 	border: 1px solid #E9E9E9;
 	border-radius: 5px;
-	margin-right: 15px;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
@@ -750,4 +749,129 @@ input, label {
 	to {
 		transform: scale(1);
 	}
+}
+
+.item-holder {
+	display: flex;
+	justify-content: space-between;
+}
+
+.item-holder .item-details {
+	width: 30%;
+	background: #FFF;
+	border-radius: 8px;
+	display: flex;
+	height: min-content;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 30px 0;
+}
+
+.skeleton {
+	overflow: auto;
+	margin-bottom: 16px;
+	width: 120px;
+	animation: threadskeleton 3s ease-in-out forwards infinite;
+}
+
+.skeleton ~ .skeleton {
+	animation-delay: 300ms;
+}
+
+.skeleton ~ .skeleton ~ .skeleton {
+	animation-delay: 600ms;
+}
+
+.skeleton .avatar {
+	float: left;
+	width: 26px;
+	height: 26px;
+	margin-right: 6px;
+	background: #e0e0e0;
+	border-radius: 6px;
+}
+
+.skeleton .line {
+	float: left;
+	background: #e0e0e0;
+	width: 40px;
+	height: 8px;
+	margin-top: 2px;
+	margin-bottom: 4px;
+	border-radius: 4px;
+}
+
+.skeleton .line ~ .line {
+	background: #eee;
+	width: 80px;
+}
+  
+@keyframes threadskeleton {
+0%, 20% {
+	opacity: 0;
+	transform: translateY(100%);
+}
+
+40%, 85% {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+100% {
+	opacity: 0;
+	transform: scale(0.6) translateY(0);
+}
+}
+
+.item-holder .item-edit {
+	width: 65%;
+	background: #FFF;
+	border-radius: 8px;
+	height: min-content;
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+}
+
+.item-holder .item-edit .input-holder {
+	height: 65px;
+}
+
+.item-holder .item-edit .input-holder {
+	margin: 20px 0;
+}
+
+.item-list-info {
+	margin-top: 15px;
+	display: flex;
+	flex-direction: column;
+	width: 256px;
+}
+
+.item-list-info .item-info {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.item-info h1 {
+	font-weight: 500;
+	font-size: 18px;
+}
+
+.item-info h2 {
+	font-weight: 400;
+	font-size: 16px;
+}
+
+.item-info:nth-child(even) {
+	margin: 20px 0;
+}
+
+.input-holder.input-danger input {
+	border: 1px solid var(--red);
+	color: var(--red);
 }

@@ -4,8 +4,23 @@ import authenticationConfig from '../config/authentication.json'
 
 class UserService extends BaseService {
 
+    constructor() {
+        super()
+        this.isLogged().then(result => {
+            if (result) {
+                Service.defaults.headers = {
+                    Authorization: `Bearer ${this.getToken()}`
+                }
+            }
+        })
+    }
+
     authenticate(params = {}) {
         return Service.postWithDelay('/user/authenticate', params)
+    }
+
+    register(params = {}) {
+        return Service.postWithDelay('/user/register', params)
     }
 
     setToken(token) {
@@ -23,8 +38,8 @@ class UserService extends BaseService {
         return sessionStorage.getItem('token')
     }
 
-    async isLogged() {
-        return await new Promise((resolve) => {
+    isLogged() {
+        return new Promise((resolve) => {
             jwt.verify(this.getToken(), authenticationConfig.secret, (err, decoded) => {
                 resolve(!err && decoded ? true : false)
             })

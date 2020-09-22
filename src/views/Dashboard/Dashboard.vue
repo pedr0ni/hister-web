@@ -9,13 +9,13 @@
             <div class="menu-items">
                 <router-link to="/dashboard/overview">PAINEL</router-link>
                 <router-link to="/dashboard/library">BIBLIOTECA</router-link>
-                <router-link to="/dashboard/students">ALUNOS</router-link>
+                <router-link to="/dashboard/students">USUÁRIOS</router-link>
             </div>
             <div class="menu-icons">
                 <a>
                     <Icon name="more_vert" type="action-icon">
                         <router-link to="/dashboard/profile/my"><Icon name="account_circle" /> Meu perfil</router-link>
-                        <a @click="logout()"><Icon name="exit_to_app" /> Sair</a>
+                        <a class="danger-link" @click="logout()"><Icon name="exit_to_app" /> Sair</a>
                     </Icon>
                 </a>
             </div>

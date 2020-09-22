@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Snackbar from '../components/Snackbar'
 
 const instance = axios.create({
     baseURL: 'http://localhost:3000',
@@ -10,7 +11,13 @@ instance.getWithDelay = (path) => {
         setTimeout(() => {
             instance.get(path)
                 .then(response => resolve(response))
-                .catch(error => reject(error))
+                .catch(error => {
+                    if (error.response)
+                        Snackbar.show(error.response.data.message)
+                    else
+                        Snackbar.show('Sem internet! Verifique sua conexão e tente novamente')
+                    resolve(undefined)
+                })
         }, 3000)
     })
 }
@@ -20,7 +27,13 @@ instance.deleteWithDelay = (path) => {
         setTimeout(() => {
             instance.delete(path)
                 .then(response => resolve(response))
-                .catch(error => reject(error))
+                .catch(error => {
+                    if (error.response)
+                        Snackbar.show(error.response.data.message)
+                    else
+                        Snackbar.show('Sem internet! Verifique sua conexão e tente novamente')
+                    resolve(undefined)
+                })
         }, 3000)
     })
 }
@@ -30,7 +43,13 @@ instance.postWithDelay = (path, body) => {
         setTimeout(() => {
             instance.post(path, body)
                 .then(response => resolve(response))
-                .catch(error => reject(error))
+                .catch(error => {
+                    if (error.response)
+                        Snackbar.show(error.response.data.message)
+                    else
+                        Snackbar.show('Sem internet! Verifique sua conexão e tente novamente')
+                    resolve(undefined)
+                })
         }, 3000)
     })
 }

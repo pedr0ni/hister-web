@@ -1,5 +1,5 @@
 <template>
-    <Item :isCreating="true" />
+    <Item :isCreating="true" :item="{isCreating: true}" />
 </template>
 
 <script>

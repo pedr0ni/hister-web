@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <div class="action-holder">
             <div class="input-holder icon-input">
                 <Icon name="search" />
@@ -38,7 +37,7 @@
                 <tbody>
                     <tr v-for="book in books" :key="book._id">
                         <td style="width: 20%">{{ book.title }}</td>
-                        <td>{{ book.authors }}</td>
+                        <td style="width: 20%">{{ book.authors }}</td>
                         <td>{{ book.category.name }}</td>
                         <td>
                             <span class="status status-success">DISPONÍVEL</span>

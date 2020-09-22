@@ -10,6 +10,10 @@ class BooksService extends BaseService {
         return Service.deleteWithDelay(`/book/${id}`)
     }
 
+    listById(id) {
+        return Service.getWithDelay(`/book/${id}`)
+    }
+
 }
 
 export default new BooksService()

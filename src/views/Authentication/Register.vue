@@ -9,23 +9,28 @@
         <h1 class="login-title">Nova Conta</h1>
         <img src="~@/assets/img/register-placeholder.png" alt="">
         <div class="login-card-form">
-            <div class="input-holder login-input">
-                <label>RA</label>
-                <input type="text" placeholder="XXXXX">
+            <div class="input-holder login-input mt-20">
+                <label>NOME COMPLETO</label>
+                <input v-model="auth.name" type="text" placeholder="Matheus Pedroni">
             </div>
             <div class="input-holder login-input mt-20">
                 <label>Email</label>
-                <input type="text" placeholder="exemplo@exemplo.com">
+                <input v-model="auth.email" type="text" placeholder="exemplo@exemplo.com">
             </div>
-            <div class="input-holder login-input mt-20">
+            <div class="input-holder login-input mt-20 password-input">
                 <label>SENHA</label>
-                <input type="password" placeholder="********">
+                <input v-model="auth.password" @input="inputChange" type="password" placeholder="********">
+            </div>
+
+             <div class="input-holder login-input mt-20 password-input">
+                <label>REPETIR SENHA</label>
+                <input v-model="auth.repeatPassword" @input="inputChange" type="password" placeholder="********">
             </div>
 
             <button v-if="isLoading" class="button login-button primary-button ripple mt-20">
                 <Spinner size="small" />
             </button>
-            <button v-else class="button login-button primary-button ripple mt-20" @click="login">
+            <button v-else class="button login-button primary-button ripple mt-20" @click="register">
                 CRIAR
             </button>
             
@@ -37,26 +42,57 @@
 
 <script>
 import Snackbar from '../../components/Snackbar'
+import UserService from '../../services/UserService'
 import Complete from './Complete'
 
 export default {
     data() {
         return {
             isLoading: false,
-            hasFinished: false
+            hasFinished: false,
+            auth: {
+                name: '',
+                email: '',
+                password: '',
+                repeatPassword: ''
+            }
         }
     },
     methods: {
-        login() {
+        async register() {
             this.isLoading = true
-            setTimeout(() => {
-                this.isLoading = false
+            
+            const response = await UserService.register(this.auth)
+
+            if (response) {
+                
                 this.hasFinished = true
-            }, this.$fakeDelay)
+            }
+
+            this.isLoading = false
         },
 
         clickedButton() {
             this.$router.push({name: 'Login'})
+        },
+
+        inputChange(e) {
+            this.setPasswordsDanger(this.auth.password != this.auth.repeatPassword)
+        },
+
+        setPasswordsDanger(danger) {
+            let passwords = document.getElementsByClassName('password-input')
+            if (danger) {
+                passwords.forEach(entry => {
+                    if (!entry.classList.contains('input-danger'))
+                        entry.classList.add('input-danger')
+                })
+            } else {
+                passwords.forEach(entry => {
+                    if (entry.classList.contains('input-danger'))
+                        entry.classList.remove('input-danger')
+                })
+            }
         }
     },
     components: {

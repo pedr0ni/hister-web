@@ -44,16 +44,16 @@ export default {
         }
     },
     methods: {
-        login() {
+        async login() {
             this.isLoading = true
-            UserService.authenticate(this.authentication).then(response => {
+
+            const response = await UserService.authenticate(this.authentication)
+            if (response) {
                 UserService.setToken(response.data.token)
                 this.$router.push({name: 'Overview'})
-            }).catch(error => {
-                Snackbar.show(error.response.data.message)
-            }).then(() => {
-                this.isLoading = false
-            })
+            }
+
+            this.isLoading = false
         }
     }
 }
