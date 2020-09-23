@@ -138,8 +138,9 @@ input, label {
 	color: #757575;
 }
 
-.button-disabled {
+.disabled-button {
 	background: #757575;
+	cursor: auto !important;
 }
 
 .primary-button {

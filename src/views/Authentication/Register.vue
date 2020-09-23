@@ -30,7 +30,7 @@
             <button v-if="isLoading" class="button login-button primary-button ripple mt-20">
                 <Spinner size="small" />
             </button>
-            <button v-else class="button login-button primary-button ripple mt-20" @click="register">
+            <button v-else :class="`button login-button ${match ? 'primary-button' : 'disabled-button'} ripple mt-20`" @click="register">
                 CRIAR
             </button>
             
@@ -58,8 +58,19 @@ export default {
             }
         }
     },
+    computed: {
+        match() {
+            let emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            return this.auth.name && this.auth.email
+                && emailRegex.test(this.auth.email)
+                && this.auth.password && this.auth.repeatPassword 
+                && this.auth.password == this.auth.repeatPassword
+        },
+    },
     methods: {
+
         async register() {
+            if (!this.auth.name || !this.auth.email) return
             this.isLoading = true
             
             const response = await UserService.register(this.auth)
