@@ -8,7 +8,7 @@
             <router-link to="/dashboard/library/create">
                 <button class="button primary-button ripple">
                     <Icon name="add" />
-                    CADASTRAR
+                    NOVO LIVRO
                 </button>
             </router-link>
         </div>

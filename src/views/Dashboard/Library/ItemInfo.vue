@@ -1,10 +1,10 @@
 <template>
-    <Item :item="item" :isLoading="isLoading" />
-    <!-- <EmptyState 
+    <Item v-if="item || isLoading" :item="item" :isLoading="isLoading" />
+    <EmptyState 
         image="login-placeholder.png" 
-        title="Nenhum livro encontrado..." 
-        content="Sua biblioteca de livros aparece aqui, clique no botão CADASTRAR para adicionar um livro" 
-        v-else /> -->
+        title="Ops..." 
+        content="Esse livro não pode ser encontrado no banco de dados." 
+        v-else />
 </template>
 
 <script>

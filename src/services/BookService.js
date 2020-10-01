@@ -14,6 +14,10 @@ class BooksService extends BaseService {
         return Service.getWithDelay(`/book/${id}`)
     }
 
+    create(props) {
+        return Service.postWithDelay('/book', props)
+    }
+
 }
 
 export default new BooksService()

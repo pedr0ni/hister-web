@@ -111,7 +111,7 @@ input, label {
     text-transform: uppercase;
 }
 
-.input-holder input {
+.input-holder input, .input-holder select {
     outline: none;
     padding: 0 10px;
     font-size: 16px;
@@ -650,15 +650,18 @@ input, label {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+}
+
+.breadcrumb i {
+	background: var(--purple);
+	color: #FFF;
+	padding: 5px;
+	border-radius: 50%;
+	margin-right: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	cursor: pointer;
-}
-
-.breadcrumb i, .breadcrumb h6 {
-	transition: color .5s ease;
-}
-
-.breadcrumb:hover i, .breadcrumb:hover h6{
-	color: #9E9E9E;
 }
 
 .status {
@@ -875,4 +878,75 @@ input, label {
 .input-holder.input-danger input {
 	border: 1px solid var(--red);
 	color: var(--red);
+}
+
+.stats-holder {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+}
+
+.stats {
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+	border-radius: 12px;
+	width: 30%;
+	position: relative;
+}
+
+.stats .icon-holder {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	padding: 0 25px;
+}
+
+.stats .icon-holder i {
+	font-size: 65px;
+}
+
+.stats h1 {
+	font-size: 22px;
+	font-weight: bold;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.stats h2 {
+	color: var(--body-one);
+	font-weight: bold;
+	font-size: 32px;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.stats-desc {
+	display: flex;
+	align-items: center;
+}
+
+.stats.primary {
+	background: #80deea;
+}
+.stats.primary {
+	color: #0097a7;
+}
+
+.stats.success {
+	background: #a5d6a7;
+}
+.stats.success {
+	color: #388e3c;
+}
+
+.stats.danger {
+	background: #ef9a9a;
+}
+.stats.danger {
+	color: #d32f2f;
 }

@@ -6,6 +6,8 @@ const instance = axios.create({
     timeout: 1000
 })
 
+const delay = 2000
+
 instance.getWithDelay = (path) => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -18,7 +20,7 @@ instance.getWithDelay = (path) => {
                         Snackbar.show('Sem internet! Verifique sua conexão e tente novamente')
                     resolve(undefined)
                 })
-        }, 3000)
+        }, delay)
     })
 }
 
@@ -34,7 +36,7 @@ instance.deleteWithDelay = (path) => {
                         Snackbar.show('Sem internet! Verifique sua conexão e tente novamente')
                     resolve(undefined)
                 })
-        }, 3000)
+        }, delay)
     })
 }
 
@@ -50,7 +52,7 @@ instance.postWithDelay = (path, body) => {
                         Snackbar.show('Sem internet! Verifique sua conexão e tente novamente')
                     resolve(undefined)
                 })
-        }, 3000)
+        }, delay)
     })
 }
 

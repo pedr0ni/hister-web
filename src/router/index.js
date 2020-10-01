@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Home from '../views/Home.vue'
-
 import Dashboard from '../views/Dashboard/Dashboard'
 import Overview from '../views/Dashboard/Overview'
 
@@ -55,17 +53,17 @@ const routes = [
         children: [
           {
             path: '',
-            name: 'dashboard.library.list',
+            name: 'Lista de Livros',
             component: ItemList
           },
           {
             path: 'create',
-            name: 'dashboard.library.create',
+            name: 'Cadastrar Livro',
             component: ItemCreate
           },
           {
             path: ':id',
-            name: 'dashboard.library.info',
+            name: 'Editar Livro',
             component: ItemInfo
           }
         ]

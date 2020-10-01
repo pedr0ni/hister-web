@@ -21,8 +21,8 @@
             </div>
         </header>
         <div class="dashboard">
-            <div class="breadcrumb" @click="$router.go(-1)">
-                <i class="material-icons">chevron_left</i>
+            <div class="breadcrumb">
+                <i v-show="$route.name != 'Overview'" @click="$router.go(-1)" class="material-icons">chevron_left</i>
                 <h6 class="headline-6">{{ $route.name }}</h6>
             </div>
             <transition name="slide-fade">
